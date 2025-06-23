@@ -1,12 +1,32 @@
-<h2>User info</h2>
-<%= form_with model: @user do |f| %>
-  <label for="inputName">Name</label>
-  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:""%>
-  <label for="inputImage">Image</label>
-  <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
-  <label for="inputIntroduction">Introduction</label>
-  <%= f.text_area :introduction, autofocus: true, id:"inputIntroduction", placeholder:""%>
-  <%= f.submit "Update User" %>
-<% end %>
+<div class="container">
+  <div class="w-50 mx-auto">
+    <h1 class="mb-4 text-start">User info</h1>
+    <% filtered_errors = @user.errors.full_messages.reject do |msg| 
+     msg == "Name can't be blank" || msg == "Introduction can't be blank" end %>
+    <% if filtered_errors.any? %>
+      <h3><%= pluralize(filtered_errors.count, "error") %> prohibited this obj from being saved:</h3>
+      <ul>
+        <% filtered_errors.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= form_with model: @user do |f| %>
+      <div class="mb-3">
+        <label for="inputName">Name</label><br>
+        <%= f.text_field :name, autofocus: true, id:"inputName", class: "form-control", placeholder:""%>
+      </div>
+      <div class="mb-3">
+        <label for="inputImage">Image</label><br>
+        <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
+      </div>
+      <div class="mb-3">
+        <label for="inputIntroduction">Introduction</label><br>
+        <%= f.text_area :introduction, autofocus: true, id:"inputIntroduction",  class: "form-control",placeholder:""%>
+      </div>
+      <%= f.submit "Update User", class: "btn btn-secondary" %>
+    <% end %>
+  </div>
+</div>
 
-<p>CopyRight Infratop.inc</p>
+

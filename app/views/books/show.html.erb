@@ -1,11 +1,33 @@
-<h1>Book datali</h1>
-<div>
-  <%= image_tag 'sample-author1.jpg' %>
-  <%= @book.user.name %>
-  <p>Title:<%= @book.title %></p>
-  <p>Opinion:<%= @book.body %></p>
-  <% if @book.user == current_user %>
-    <%= link_to "Destroy", book_path(@book), method: :delete %>
-  <% end %>
-
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+      <%= render 'shared/user_info', user: @user %>
+      <%= render 'shared/new_book_form', new_book: @new_book %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+      <table class="table table-hover-inverse">
+        <tbody>
+          <tr>
+            <td>
+              <div>
+                <%= image_tag @user.get_profile_image(100,100) %>
+                <%= link_to @book.user.name, user_path(@user), class: "d-block" %>
+              </div>
+            </td>
+            <td><%=link_to @book.title, book_path(@book) %></td>
+            <td><%= @book.body %></td>
+            <td class="text-wrap">
+              <% if @book.user == current_user %>
+                <div class="d-flex">
+                  <%= link_to "Edit", edit_book_path(@book), class:"btn btn-success btn-sm" %>
+                  <%= link_to "Destroy", book_path(@book), method: :delete, data: { confirm: "本当に消しますか？" }, class: "btn btn-danger btn-sm ml-4" %>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
